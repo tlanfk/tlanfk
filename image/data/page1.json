@@ -1,0 +1,95 @@
+{
+    "image": "4.png",
+    "linkAreas": [
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 315,
+            "number": 32,
+            "width": 26,
+            "height": 26,
+            "link": "index"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 370,
+            "number": 1.2,
+            "width": 26,
+            "height": 26,
+            "link": "page2"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 420,
+            "number": 22,
+            "width": 26,
+            "height": 26,
+            "link": "page3"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 470,
+            "number": 35,
+            "width": 26,
+            "height": 26,
+            "link": "page4"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 630,
+            "number": 35,
+            "width": 26,
+            "height": 26,
+            "link": "page5"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 680,
+            "number": 35,
+            "width": 26,
+            "height": 26,
+            "link": "page6"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 730,
+            "number": 27,
+            "width": 26,
+            "height": 26,
+            "link": "page7"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 780,
+            "number": 29,
+            "width": 26,
+            "height": 26,
+            "link": "page8"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 840,
+            "number": 29,
+            "width": 26,
+            "height": 26,
+            "link": "page9"
+        },
+        {
+            "type": "number",
+            "x": 1055,
+            "y": 890,
+            "number": 29,
+            "width": 26,
+            "height": 26,
+            "link": "page10"
+        }
+    ]
+}
