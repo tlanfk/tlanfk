@@ -39,16 +39,16 @@ const pages = {
             { type: 'text', x: 1055, y: 315, text: "32", width: 40, height: 40 },
             { type: 'text', x: 1055, y: 370, text: "1.2", width: 40, height: 40 },
             { type: 'text', x: 1055, y: 420, text: "22", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 470, text: "35", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 470, text: "27", width: 40, height: 40 },
 			
         //    { type: 'text', x: 1055, y: 530, text: "50", width: 60, height: 40 },
 			
-            { type: 'text', x: 1055, y: 620, text: "35", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 670, text: "35", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 620, text: "27", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 670, text: "27", width: 40, height: 40 },
             { type: 'text', x: 1055, y: 730, text: "27", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 780, text: "29", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 830, text: "29", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 880, text: "29", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 780, text: "27", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 830, text: "27", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 880, text: "27", width: 40, height: 40 },
 			
             { type: 'link', x: 678, y: 123, width: 90, height: 35, link: 'index' },
             { type: 'link', x: 783, y: 123, width: 90, height: 35, link: 'page3' },
