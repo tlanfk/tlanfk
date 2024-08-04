@@ -36,10 +36,10 @@ const pages = {
     'page4': {
         image: 'image/4.png',
         elements: [
-            { type: 'text', x: 1055, y: 315, text: "32", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 370, text: "1.2", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 420, text: "22", width: 40, height: 40 },
-            { type: 'text', x: 1055, y: 470, text: "27", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 310, text: "32", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 365, text: "1.2", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 415, text: "22", width: 40, height: 40 },
+            { type: 'text', x: 1055, y: 470, text: "35", width: 40, height: 40 },
 			
         //    { type: 'text', x: 1055, y: 530, text: "50", width: 60, height: 40 },
 			
