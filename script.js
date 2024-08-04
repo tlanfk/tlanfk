@@ -103,88 +103,137 @@ let currentScrollIndex = 0;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-function loadImage(src) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-        img.src = src;
-    });
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
 
-async function renderPage(pageName) {
-    const page = pages[pageName];
-    let img;
+    // 이미지 캐시를 위한 객체
+    const imageCache = {};
 
-    if (pageName === 'page6' || pageName === 'page7') {
-        img = await loadImage(page.images[currentScrollIndex]);
-    } else {
-        img = await loadImage(page.image);
+    // 이미지 프리로딩 및 프로그레스 표시를 위한 함수
+    async function preloadImages(callback) {
+        const imagePaths = new Set();
+        Object.values(pages).forEach(page => {
+            if (page.image) {
+                imagePaths.add(page.image);
+            }
+            if (page.images) {
+                page.images.forEach(image => imagePaths.add(image));
+            }
+        });
+
+        const totalImages = imagePaths.size;
+        let loadedImages = 0;
+
+        const loadImage = (src) => new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                imageCache[src] = img;
+                loadedImages++;
+                callback(loadedImages / totalImages);
+                resolve(img);
+            };
+            img.onerror = reject;
+            img.src = src;
+        });
+
+        await Promise.all(Array.from(imagePaths).map(src => {
+            if (!imageCache[src]) {
+                return loadImage(src);
+            }
+        }));
     }
-    
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0);
 
-    page.elements.forEach(element => {
-        if (element.type === 'link') {
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-            ctx.fillRect(element.x, element.y, element.width, element.height);
-        } else if (element.type === 'text') {
-            ctx.fillStyle = 'rgba(68, 68, 68, 1.0)';
-            ctx.fillRect(element.x, element.y, element.width, element.height);
-            
-            ctx.fillStyle = 'white';
-            ctx.font = '20px Arial';
-            ctx.textBaseline = 'middle';
-            ctx.textAlign = 'center';
-            const textX = element.x + element.width / 2;
-            const textY = element.y + element.height / 2;
-            ctx.fillText(element.text, textX, textY);
+    function showLoadingProgress(progress) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.font = '20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(`Loading... ${Math.round(progress * 100)}%`, canvas.width / 2, canvas.height / 2);
+    }
+
+    async function renderPage(pageName) {
+        const page = pages[pageName];
+        let img;
+
+        if ((pageName === 'page6' || pageName === 'page7') && page.images) {
+            img = imageCache[page.images[currentScrollIndex]];
+        } else {
+            img = imageCache[page.image];
         }
-    });
-}
 
-
-canvas.addEventListener('click', (event) => {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    
-    const x = (event.clientX - rect.left) * scaleX;
-    const y = (event.clientY - rect.top) * scaleY;
-
-    const page = pages[currentPage];
-    page.elements.forEach(element => {
-        if (element.type === 'link' &&
-            x >= element.x && x <= element.x + element.width &&
-            y >= element.y && y <= element.y + element.height) {
-            currentPage = element.link;
-            currentScrollIndex = 0; // Reset scroll index when changing pages
-            renderPage(currentPage);
+        if (!img) {
+            console.error('Image not found in cache:', page.image);
+            return;
         }
-    });
-});
 
-// 스크롤 이벤트 처리
-canvas.addEventListener('wheel', (event) => {
-    if (currentPage === 'page6' || currentPage === 'page7') {
-        event.preventDefault();
-        if (event.deltaY > 0 && currentScrollIndex < pages[currentPage].images.length - 1) {
-            currentScrollIndex++;
-        } else if (event.deltaY < 0 && currentScrollIndex > 0) {
-            currentScrollIndex--;
-        }
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+
+        page.elements.forEach(element => {
+            if (element.type === 'link') {
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+                ctx.fillRect(element.x, element.y, element.width, element.height);
+            } else if (element.type === 'text') {
+                ctx.fillStyle = 'rgba(68, 68, 68, 1.0)';
+                ctx.fillRect(element.x, element.y, element.width, element.height);
+
+                ctx.fillStyle = 'white';
+                ctx.font = '20px Arial';
+                ctx.textBaseline = 'middle';
+                ctx.textAlign = 'center';
+                const textX = element.x + element.width / 2;
+                const textY = element.y + element.height / 2;
+                ctx.fillText(element.text, textX, textY);
+            }
+        });
+    }
+
+	canvas.addEventListener('click', (event) => {
+		const rect = canvas.getBoundingClientRect();
+		const scaleX = canvas.width / rect.width;
+		const scaleY = canvas.height / rect.height;
+		
+		const x = (event.clientX - rect.left) * scaleX;
+		const y = (event.clientY - rect.top) * scaleY;
+
+		const page = pages[currentPage];
+		page.elements.forEach(element => {
+			if (element.type === 'link' &&
+				x >= element.x && x <= element.x + element.width &&
+				y >= element.y && y <= element.y + element.height) {
+				currentPage = element.link;
+				currentScrollIndex = 0; // Reset scroll index when changing pages
+				renderPage(currentPage);
+			}
+		});
+	});
+
+	// 스크롤 이벤트 처리
+	canvas.addEventListener('wheel', (event) => {
+		if (currentPage === 'page6' || currentPage === 'page7') {
+			event.preventDefault();
+			if (event.deltaY > 0 && currentScrollIndex < pages[currentPage].images.length - 1) {
+				currentScrollIndex++;
+			} else if (event.deltaY < 0 && currentScrollIndex > 0) {
+				currentScrollIndex--;
+			}
+			renderPage(currentPage);
+		}
+	});
+
+
+	// 윈도우 리사이즈 이벤트 처리
+	window.addEventListener('resize', () => {
+		renderPage(currentPage);
+	});
+
+    // 이미지를 미리 로드하고 초기 페이지를 렌더링
+    preloadImages(showLoadingProgress).then(() => {
         renderPage(currentPage);
-    }
+    });
 });
-
-
-// 윈도우 리사이즈 이벤트 처리
-window.addEventListener('resize', () => {
-    renderPage(currentPage);
-});
-
-// 초기 페이지 렌더링
-renderPage(currentPage);
