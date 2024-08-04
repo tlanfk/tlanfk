@@ -64,6 +64,7 @@ const pages = {
         image: 'image/5.png',
         elements: [
 			{ type: 'text', x: 830, y: 290, text: "유지", width: 120, height: 40 },
+			{ type: 'text', x: 830, y: 343, text: "유지", width: 120, height: 40 },
 			
             { type: 'link', x: 678, y: 123, width: 90, height: 35, link: 'index' },
             { type: 'link', x: 783, y: 123, width: 90, height: 35, link: 'page3' },
