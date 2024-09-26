@@ -15,6 +15,7 @@ const pages = {
     'page2': {
         image: 'image/2.png',
         elements: [
+			{ type: 'text', x: 790, y: 200, text: "렌더링 크기: 100.000000", width: 240, height: 40 },
             { type: 'link', x: 125, y: 200, width: 90, height: 35, link: 'index' },
             { type: 'text', x: 830, y: 335, text: "중간", width: 120, height: 40 },
             { type: 'text', x: 830, y: 490, text: "낮음", width: 120, height: 40 },
