@@ -13,6 +13,7 @@
             justify-content: center;
             align-items: center;
             background-color: #1e1e1e;
+            overflow: hidden;
         }
         #canvas-container {
             position: relative;
@@ -23,12 +24,53 @@
             max-width: 100%;
             max-height: 100vh;
             object-fit: contain;
+            touch-action: none; /* 터치 스크롤 방지 */
+        }
+
+        /* 오버레이 스타일 */
+        #mapOverlay {
+            display: none; /* 기본적으로 숨김 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #mapOverlay img {
+            max-width: 90%;
+            max-height: 80%;
+            margin-bottom: 20px;
+        }
+
+        #overlayBackBtn {
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #000;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #overlayBackBtn:hover {
+            background-color: #eee;
         }
     </style>
 </head>
 <body>
     <div id="canvas-container">
         <canvas id="gameCanvas"></canvas>
+    </div>
+    <!-- 맵 정보 표시 오버레이 -->
+    <div id="mapOverlay">
+        <img src="image/bag_map.png" alt="맵 정보">
+        <button id="overlayBackBtn">뒤로</button>
     </div>
     <script src="script.js"></script>
 </body>
